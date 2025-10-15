@@ -6,7 +6,7 @@ pipeline{
 }
 
         stages{
-            stage('removing oldfiles'){
+            stage('removing oldfile'){
                 steps{
                 sshagent(['Nginx']) {
                     sh"""
