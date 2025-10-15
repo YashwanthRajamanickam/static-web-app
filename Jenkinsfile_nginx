@@ -13,5 +13,13 @@ pipeline{
                 }
                 }
         }
+        
+            stage('cloning the repo'){
+                steps{
+                git branch: 'development', credentialsId: 'Yashwanth_Studentwebapp', url: ' https://github.com/YashwanthRajamanickam/static-web-app.git'
+                }
+            
+        }
+
     }
 }
