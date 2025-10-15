@@ -29,8 +29,8 @@ pipeline{
 
            stage('copying the folder'){
                 steps{
+                sshagent(['Nginx']){
                 sh """
-               sshagent(['Nginx']){
                 scp -o StrictHostKeyChecking=no static-web-app/* ec2-user@${nginx_IP}:/usr/share/nginx/html/
                 sleep 15
                 ls /usr/share/nginx/html/ 
