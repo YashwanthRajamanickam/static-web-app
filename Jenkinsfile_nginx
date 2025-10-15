@@ -1,15 +1,21 @@
 pipeline{
     agent any
+    environment {
+    nginx_IP = '15.206.73.132'
+    }
 
     triggers {
   githubPush()
+}
+  options {
+  buildDiscarder logRotator(numToKeepStr: '5')
 }
 
         stages{
             stage('removing old files'){
                 steps{
                 sshagent(['Nginx']) {
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@15.206.73.132 'sudo rm -rf /usr/share/nginx/html/'"
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@${nginx_IP} 'sudo rm -rf /usr/share/nginx/html/'"
                 }
                 }
         }
@@ -18,6 +24,16 @@ pipeline{
                 steps{
                 git branch: 'development', credentialsId: 'Yashwanth_Studentwebapp', url: ' https://github.com/YashwanthRajamanickam/static-web-app.git'
                 }
+            
+        }
+
+           stage('copying the folder'){
+                steps{
+                sh """
+                scp -o StrictHostKeyChecking=no static-web-app/* ec2-user@${nginx_IP}:/usr/share/nginx/html/
+                ls /usr/share/nginx/html/ 
+                """
+                 }
             
         }
 
