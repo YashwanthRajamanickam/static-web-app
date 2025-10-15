@@ -9,7 +9,7 @@ pipeline{
             stage('removing old files'){
                 steps{
                 sshagent(['Nginx']) {
-                    sh "ssh -o StrictHostKeyChecking=no ec2-user@15.206.73.132 'rm -rf /usr/share/nginx/html/'"
+                    sh "ssh -o StrictHostKeyChecking=no ec2-user@15.206.73.132 'sudo rm -rf /usr/share/nginx/html/'"
                 }
                 }
         }
